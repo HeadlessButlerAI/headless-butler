@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://你的域名.com/sitemap.xml
+Sitemap: https://headlessbutlerai.github.io/headless-butler/demo/sitemap.xml
