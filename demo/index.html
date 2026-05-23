@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeadlessButler AI - 演示</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --yellow: #d2991d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 { color: var(--accent); font-size: 28px; margin-bottom: 8px; }
+        .subtitle { color: #8b949e; margin-bottom: 32px; font-size: 16px; }
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .panel h2 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-get { background: #1f6feb33; color: #58a6ff; }
+        .badge-post { background: #3fb95033; color: #3fb950; }
+        pre {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            font-size: 13px;
+            color: #e6edf3;
+        }
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+        button:hover { opacity: 0.85; }
+        .response {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            background: #0d1117;
+            border: 1px solid var(--green);
+            display: none;
+        }
+        .response.show { display: block; }
+        .response pre { border: none; padding: 0; background: none; }
+        .success { color: var(--green); }
+        .endpoint { font-family: monospace; color: var(--yellow); }
+        .tabs { display: flex; gap: 0; margin-bottom: 16px; }
+        .tab {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .tab:first-child { border-radius: 6px 0 0 6px; }
+        .tab:last-child { border-radius: 0 6px 6px 0; }
+        .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <h1>🤖 HeadlessButler AI</h1>
+    <p class="subtitle">为网站开通 AI 专用 VIP 通道 — 演示原型</p>
+
+    <!-- 三层 VIP 通道演示 -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('invite')">📨 邀请函</button>
+        <button class="tab" onclick="switchTab('menu')">📋 服务单</button>
+        <button class="tab" onclick="switchTab('api')">⚡ 数据接口</button>
+    </div>
+
+    <!-- 第一层：邀请函 (llms.txt) -->
+    <div id="tab-invite" class="tab-content active">
+        <div class="panel">
+            <h2>📨 第一层：VIP 邀请函 <span style="font-weight:normal;font-size:13px;color:#8b949e;">— llms.txt</span></h2>
+            <p style="margin-bottom:12px;">AI 搜索你的网站时，首先读取这个文件。它告诉 AI：<strong>"本站有专用接口，请走 VIP 通道"</strong>。</p>
+            <pre># HeadlessButler AI
+&gt; 为你的网站开通 AI 专用 VIP 通道。
+
+## 核心能力
+- 查看菜单/服务：GET /api/info
+- 查询可用时段：GET /api/availability
+- 提交预订：POST /api/reserve
+
+## 接口文档
+完整规范请访问 /docs/api-spec.md</pre>
+        </div>
+    </div>
+
+    <!-- 第二层：服务单 (/welcome-ai) -->
+    <div id="tab-menu" class="tab-content">
+        <div class="panel">
+            <h2>📋 第二层：VIP 服务单 <span style="font-weight:normal;font-size:13px;color:#8b949e;">— /welcome-ai</span></h2>
+            <p style="margin-bottom:12px;">AI 进入 VIP 通道后，收到这份<strong>结构化能力菜单</strong>，秒懂网站能做什么。</p>
+            <pre>{
+  "service": "HeadlessButler AI",
+  "version": "1.0.0",
+  "actions": [
+    {
+      "id": "get_info",
+      "description": "获取商家信息（名称、地址、营业时间）",
+      "method": "GET",
+      "endpoint": "/api/info"
+    },
+    {
+      "id": "check_availability",
+      "description": "查询可预订时段",
+      "method": "GET",
+      "endpoint": "/api/availability?date=YYYY-MM-DD&party_size=4"
+    },
+    {
+      "id": "make_reservation",
+      "description": "提交预订",
+      "method": "POST",
+      "endpoint": "/api/reserve",
+      "parameters": {
+        "name": "客户姓名",
+        "phone": "联系电话",
+        "date": "日期",
+        "time": "时间",
+        "party_size": "人数",
+        "notes": "特殊要求（可选）"
+      }
+    }
+  ]
+}</pre>
+        </div>
+    </div>
+
+    <!-- 第三层：数据接口 (API 模拟) -->
+    <div id="tab-api" class="tab-content">
+        <div class="panel">
+            <h2>⚡ 第三层：VIP 包间 <span style="font-weight:normal;font-size:13px;color:#8b949e;">— API 调用演示</span></h2>
+            <p style="margin-bottom:12px;">模拟 AI 直接调用 API 完成订位。点击按钮，查看请求和响应。</p>
+
+            <p style="margin-bottom:6px;">📡 <span class="endpoint">GET /api/info</span> <span class="badge badge-get">GET</span></p>
+            <pre>{
+  "name": "月半湾西餐厅 (Demo)",
+  "address": "示例路1号",
+  "phone": "13800000000",
+  "openingHours": "11:30-14:00, 17:30-21:00"
+}</pre>
+
+            <p style="margin:16px 0 6px;">📡 <span class="endpoint">POST /api/reserve</span> <span class="badge badge-post">POST</span></p>
+            <pre>// 请求体
+{
+  "name": "张三",
+  "phone": "13800000000",
+  "date": "2026-05-25",
+  "time": "19:00",
+  "party_size": 4,
+  "notes": "靠窗位置"
+}</pre>
+            <button onclick="simulateReserve()">🚀 模拟 AI 调用预订接口</button>
+            <div id="api-response" class="response">
+                <p class="success">✅ 请求成功</p>
+                <pre id="response-json"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(name) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-' + name).classList.add('active');
+        }
+
+        function simulateReserve() {
+            const response = {
+                success: true,
+                reservation_id: "R" + new Date().toISOString().slice(0,10).replace(/-/g,'') + "-" + Math.floor(Math.random()*900+100),
+                message: "预订成功！2026年5月25日 19:00，4人桌（靠窗），请提前5分钟到达。",
+                timestamp: new Date().toISOString()
+            };
+            document.getElementById('response-json').textContent = JSON.stringify(response, null, 2);
+            document.getElementById('api-response').classList.add('show');
+        }
+    </script>
+
+</body>
+</html>
