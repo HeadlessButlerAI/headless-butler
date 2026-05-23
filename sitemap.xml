@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://你的域名.com/</loc>
+    <loc>https://headlessbutlerai.github.io/headless-butler/</loc>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://你的域名.com/docs/overview</loc>
+    <loc>https://github.com/HeadlessButlerAI/headless-butler</loc>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://headlessbutlerai.github.io/headless-butler/demo/</loc>
     <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://headlessbutlerai.github.io/headless-butler/docs/overview</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://headlessbutlerai.github.io/headless-butler/docs/quickstart</loc>
+    <priority>0.70</priority>
   </url>
 </urlset>
