@@ -39,7 +39,12 @@ HeadlessButler AI 通过"三层 VIP 通道"架构解决这些问题。
 
 ---
 
-## API 接口规范（草案）
+## API 接口规范
+
+### GET /welcome-ai
+AI 服务发现入口，返回所有可调用操作的能力清单。
+
+**响应格式**：参考 specs/welcome-ai.json
 
 ### GET /api/info
 返回商家的基本信息。
@@ -53,3 +58,151 @@ HeadlessButler AI 通过"三层 VIP 通道"架构解决这些问题。
   "openingHours": "11:30-14:00, 17:30-21:00",
   "tablesAvailable": 5
 }
+```
+
+### GET /api/availability
+查询指定日期和人数是否有可用时段。
+
+**参数**：
+- date: 日期 YYYY-MM-DD（必填）
+- party_size: 人数（必填）
+
+**响应示例**：
+```json
+{
+  "date": "2026-05-25",
+  "party_size": 4,
+  "available": true,
+  "slots": [
+    {"time": "11:30", "available": true},
+    {"time": "12:00", "available": true},
+    {"time": "19:00", "available": true}
+  ]
+}
+```
+
+### POST /api/reserve
+提交预订请求。
+
+**请求体**：
+```json
+{
+  "name": "张三",
+  "phone": "13800000000",
+  "date": "2026-05-25",
+  "time": "19:00",
+  "party_size": 4,
+  "notes": "靠窗位置"
+}
+```
+
+**响应示例**：
+```json
+{
+  "success": true,
+  "reservation_id": "R20260525-042",
+  "message": "预订成功！2026年5月25日 19:00，4人桌。请提前5分钟到达。",
+  "details": {
+    "name": "张三",
+    "date": "2026-05-25",
+    "time": "19:00",
+    "party_size": 4
+  },
+  "timestamp": "2026-05-23T12:00:00Z"
+}
+```
+
+---
+
+## 参考实现
+
+项目提供了两种语言的完整参考实现：
+
+### Python (FastAPI)
+- 路径：`server-python/`
+- 启动：`pip install -r requirements.txt && python main.py`
+- 端口：8000
+- 特性：自动生成 Swagger UI (`/docs`)
+
+### Node.js (Express)
+- 路径：`server-node/`
+- 启动：`npm install && node server.js`
+- 端口：3000
+
+---
+
+## 项目结构
+
+```
+headless-butler/
+├── README.md              # 项目概述
+├── llms.txt               # AI 专用服务指南（简要版）
+├── llms-full.txt          # AI 专用服务指南（完整版）
+├── robots.txt             # 爬虫规则
+├── sitemap.xml            # 站点地图
+├── LICENSE                # MIT 许可证
+├── .gitignore             # Git 忽略规则
+├── demo/
+│   └── index.html         # 三层 VIP 通道交互演示
+├── docs/
+│   ├── overview.md        # 项目概述文档
+│   ├── quickstart.md      # 快速开始指南
+│   └── api-spec.md        # API 接口规范
+├── specs/
+│   └── welcome-ai.json    # /welcome-ai JSON Schema
+├── server-python/
+│   ├── main.py            # FastAPI 参考实现
+│   ├── requirements.txt   # Python 依赖
+│   └── Dockerfile         # Docker 部署
+└── server-node/
+    ├── server.js           # Express 参考实现
+    ├── package.json        # Node 依赖
+    └── Dockerfile          # Docker 部署
+```
+
+---
+
+## 部署方式
+
+### 方式一：静态文件
+只需在网站根目录添加 `llms.txt`、`robots.txt`。
+
+### 方式二：微服务
+运行 `server-python/` 或 `server-node/` 作为独立 API 服务。
+
+### 方式三：Docker 部署
+```bash
+# Python
+docker build -t headless-butler-python ./server-python
+docker run -p 8000:8000 headless-butler-python
+
+# Node.js
+docker build -t headless-butler-node ./server-node
+docker run -p 3000:3000 headless-butler-node
+```
+
+---
+
+## 适用场景
+- 🍽️ 餐厅在线订位
+- 🏨 酒店房间查询与预订
+- 🛍️ 零售门店库存查询
+- 🏢 企业官网服务预约
+- 📅 诊所/美容院预约挂号
+- 🎫 票务/活动信息查询与购买
+
+---
+
+## 生态与工具链
+
+| 类别 | 工具 | 说明 |
+|------|------|------|
+| 生成器 | llms.txt Generator | 自动抓取网站生成 llms.txt |
+| 生成器 | Llmify (WordPress) | WordPress 自动生成插件 |
+| 验证 | LLMTEXT | 验证 llms.txt 有效性 |
+| 标准 | llmstxt.org | llms.txt 标准官网 |
+
+---
+
+## 许可证
+MIT License

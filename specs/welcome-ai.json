@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Welcome AI Response",
+  "description": "/welcome-ai 端点的响应数据结构定义",
+  "type": "object",
+  "required": ["service", "version", "actions"],
+  "properties": {
+    "service": {
+      "type": "string",
+      "description": "服务名称"
+    },
+    "version": {
+      "type": "string",
+      "description": "API 版本号，遵循 SemVer",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "description": {
+      "type": "string",
+      "description": "服务描述"
+    },
+    "actions": {
+      "type": "array",
+      "description": "AI 可调用的操作列表",
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "method", "endpoint"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "操作的唯一标识符"
+          },
+          "description": {
+            "type": "string",
+            "description": "操作的中文描述"
+          },
+          "method": {
+            "type": "string",
+            "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"],
+            "description": "HTTP 方法"
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "API 端点路径"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "参数定义，键为参数名，值为参数说明",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
