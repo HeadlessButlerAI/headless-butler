@@ -1,0 +1,30 @@
+# HeadlessButler AI
+
+> 为你的网站开通 AI 专用 VIP 通道。
+
+HeadlessButler AI 是一个开源的无头网站 AI 管家框架。
+它让任何 AI Agent 都能像人类一样读懂、使用你的网站——查询信息、预订服务、下单交易，全自动完成。
+
+## 核心文档
+- [项目概述](https://github.com/HeadlessButlerAI/headless-butler/blob/main/README.md)
+- [API 接口规范](https://github.com/HeadlessButlerAI/headless-butler/blob/main/docs/api-spec.md)
+- [快速开始指南](https://github.com/HeadlessButlerAI/headless-butler/blob/main/docs/quickstart.md)
+
+## 演示
+- [在线 Demo](https://headlessbutlerai.github.io/headless-butler/demo/)
+
+## 核心能力
+- 为网站提供 AI 可读的结构化 API
+- 自动生成 llms.txt 和 robots.txt 配置
+- 提供 /welcome-ai 端点，列出所有可用操作
+- 支持 Webhook 对接现有业务系统
+
+## 适用场景
+- 餐厅在线订位
+- 酒店房间查询与预订
+- 零售门店库存查询
+- 企业官网服务预约
+- 任何需要 AI Agent 直接操作的网站
+
+## 许可证
+MIT License
